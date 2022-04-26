@@ -19,6 +19,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         myTouchView=findViewById(R.id.mutitouchview);
         //Log.i("distance",""+this);
-        myTouchView.initView(this);
+        //myTouchView.initView(this);
     }
 }
