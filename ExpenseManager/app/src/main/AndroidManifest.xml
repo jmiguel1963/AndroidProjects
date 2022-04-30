@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.expensemanager">
+    
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
 
     <application
         android:allowBackup="true"
@@ -23,10 +26,10 @@
             android:exported="false" />
         <activity
             android:name=".TripEditActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TripListActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
