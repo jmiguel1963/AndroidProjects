@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CheckersTest</string>
+    <string name="playGame">PlayGame</string>
+    <string name="againstMobile">AgainstMobile</string>
+    <string name="manual">Manual</string>
+    <item type="id" name="position" />
+    <item type="id" name="filled"/>
+</resources>
