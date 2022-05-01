@@ -17,8 +17,12 @@ public class AdapterTrip extends RecyclerView.Adapter<AdapterTrip.ViewHolderTrip
     final AdapterTrip.OnItemClickListener listener;
 
     public interface OnItemClickListener{
-        void onItemClick(Trip item);
+        void onItemClick(View view,Trip item);
     }
+
+   /*public interface OnItemClickListener{
+        void onItemClick(Trip item);
+    }*/
 
     public AdapterTrip(ArrayList<Trip> trips,AdapterTrip.OnItemClickListener listener) {
         this.trips = trips;
@@ -36,6 +40,7 @@ public class AdapterTrip extends RecyclerView.Adapter<AdapterTrip.ViewHolderTrip
     @Override
     public void onBindViewHolder(@NonNull ViewHolderTrip holder, int position) {
         holder.assignTrip(trips.get(position));
+        holder.itemView.setTag(position);
     }
 
     @Override
@@ -63,7 +68,8 @@ public class AdapterTrip extends RecyclerView.Adapter<AdapterTrip.ViewHolderTrip
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onItemClick(trip);
+                    listener.onItemClick(view,trip);
+                    //listener.onItemClick(trip);
                 }
             });
         }

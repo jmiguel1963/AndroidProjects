@@ -40,6 +40,22 @@ public class Trip implements Parcelable{
         }
     };
 
+    public void addExpense(Expense expense){
+        expenses.add(expense);
+    }
+
+    public void addUser(User user){
+        users.add(user);
+    }
+
+    public ArrayList<Expense> getExpenses(){
+        return this.expenses;
+    }
+
+    public ArrayList<User> getUsers() {
+        return this.users;
+    }
+
     public Uri getUri() {
         return uri;
     }

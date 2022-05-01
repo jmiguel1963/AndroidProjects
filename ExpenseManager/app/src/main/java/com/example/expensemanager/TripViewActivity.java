@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,8 +23,10 @@ public class TripViewActivity extends AppCompatActivity {
     private TextView tripDate;
     private Trip trip;
     private FloatingActionButton addNewExpense;
-    private ActivityResultLauncher<Intent> activityResultLauncher;
+    private ActivityResultLauncher<Intent> activityExpenseResultLauncher,activityEditTripResultLauncher;
     private AdapterTrip adapter;
+    private ImageButton editTrip;
+    private Expense expense;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +42,25 @@ public class TripViewActivity extends AppCompatActivity {
         tripDescription.setText(trip.getDescription());
         tripDate.setText(trip.getDate());
         addNewExpense=findViewById(R.id.btnAddNewExpense);
+        editTrip=findViewById(R.id.btnEditTrip);
 
-        activityResultLauncher= registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        activityExpenseResultLauncher= registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode()==RESULT_OK && result.getData()!=null){
+                    expense=result.getData().getParcelableExtra("expense");
 
+                }
+            }
+        });
+
+        activityEditTripResultLauncher= registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode()==RESULT_OK && result.getData()!=null){
+                    trip=result.getData().getParcelableExtra("edit");
+                    tripDescription.setText(trip.getDescription());
+                    tripDate.setText(trip.getDate());
                 }
             }
         });
@@ -52,8 +69,25 @@ public class TripViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent expenseIntent=new Intent(TripViewActivity.this,ExpenseActivity.class);
-                activityResultLauncher.launch(expenseIntent);
+                activityExpenseResultLauncher.launch(expenseIntent);
             }
         });
+
+        editTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent editIntent=new Intent(TripViewActivity.this,TripEditActivity.class);
+                editIntent.putExtra("trip",trip);
+                activityEditTripResultLauncher.launch(editIntent);
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("myTripBack", trip);
+        setResult(RESULT_OK,intent);
+        finish();
     }
 }

@@ -25,8 +25,10 @@ public class TripListActivity extends AppCompatActivity {
     private RecyclerView recycler;
     private ArrayList<Trip> trips;
     private FloatingActionButton createTrip;
-    private ActivityResultLauncher<Intent> listActivityResultLauncher;
+    private ActivityResultLauncher<Intent> listActivityResultLauncher,tripActivityResultLauncher;
     private AdapterTrip adapter;
+    private Trip trip;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +49,34 @@ public class TripListActivity extends AppCompatActivity {
 
                     adapter= new AdapterTrip(trips, new AdapterTrip.OnItemClickListener() {
                         @Override
-                        public void onItemClick(Trip item) {
+                        //public void onItemClick(Trip item) {
+                        public void onItemClick(View view,Trip item) {
                             moveToTripView(item);
+                            position=(int)view.getTag();
+                            Log.i("distance",""+position);
                         }
                     });
+                    recycler.setAdapter(adapter);
+                }
+            }
+        });
+
+        tripActivityResultLauncher=registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode()==RESULT_OK && result.getData()!=null){
+                    trip=result.getData().getParcelableExtra("myTripBack");
+                    trips.set(position,trip);
+
+                    adapter= new AdapterTrip(trips, new AdapterTrip.OnItemClickListener() {
+                        @Override
+                        //public void onItemClick(Trip item) {
+                        public void onItemClick(View view,Trip item) {
+                            moveToTripView(item);
+                            position=(int)view.getTag();
+                        }
+                    });
+
                     recycler.setAdapter(adapter);
                 }
             }
@@ -76,6 +102,7 @@ public class TripListActivity extends AppCompatActivity {
     public void moveToTripView(Trip trip){
         Intent intentView= new Intent(this,TripViewActivity.class);
         intentView.putExtra("item",trip);
-        startActivity(intentView);
+        tripActivityResultLauncher.launch(intentView);
+
     }
 }

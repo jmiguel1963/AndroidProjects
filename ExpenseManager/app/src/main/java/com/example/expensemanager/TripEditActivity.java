@@ -32,8 +32,10 @@ public class TripEditActivity extends AppCompatActivity {
     private String tripDescription;
     private String tripDate;
     private Uri tripUri;
+    private Trip trip;
     private ArrayList<Trip> trips;
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    private boolean createTrip=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,18 @@ public class TripEditActivity extends AppCompatActivity {
 
         Intent originalIntent=getIntent();
         trips=originalIntent.getParcelableArrayListExtra("enter");
-        if (trips.get(0).getUri()==null){
-            trips=new ArrayList<Trip>();
+        if (trips==null){
+            trip=originalIntent.getParcelableExtra("trip");
+            choosePhoto.setEnabled(false);
+            validation.setText("Modify");
+            createTrip=false;
+            image.setImageURI(trip.getUri());
+            descriptionText.setText(trip.getDescription());
+            dateText.setText(trip.getDate());
+        }else{
+            if (trips.get(0).getUri()==null){
+                trips=new ArrayList<Trip>();
+            }
         }
 
 
@@ -77,13 +89,16 @@ public class TripEditActivity extends AppCompatActivity {
             public void onClick(View view) {
                 tripDescription=descriptionText.getText().toString();
                 tripDate=dateText.getText().toString();
-                Trip trip=new Trip(tripUri,tripDate,tripDescription);
-                trips.add(trip);
-                for (Trip mytrip:trips){
-                    Log.i("distance",mytrip.getDescription());
-                }
                 Intent resultIntent=new Intent();
-                resultIntent.putParcelableArrayListExtra("result",trips);
+                if (createTrip){
+                    Trip newTrip=new Trip(tripUri,tripDate,tripDescription);
+                    trips.add(newTrip);
+                    resultIntent.putParcelableArrayListExtra("result",trips);
+                }else{
+                    trip.setDate(tripDate);
+                    trip.setDescription(tripDescription);
+                    resultIntent.putExtra("edit",trip);
+                }
                 setResult(RESULT_OK,resultIntent);
                 finish();
             }

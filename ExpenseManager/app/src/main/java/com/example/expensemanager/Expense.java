@@ -1,9 +1,12 @@
 package com.example.expensemanager;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class Expense {
+public class Expense implements Parcelable {
     private String description;
     private int amount;
     private String date;
@@ -15,6 +18,36 @@ public class Expense {
         this.date = date;
         payers = new HashMap<String, Integer>();
     }
+
+    protected Expense(Parcel in) {
+        description = in.readString();
+        amount = in.readInt();
+        date = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(description);
+        dest.writeInt(amount);
+        dest.writeString(date);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Expense> CREATOR = new Creator<Expense>() {
+        @Override
+        public Expense createFromParcel(Parcel in) {
+            return new Expense(in);
+        }
+
+        @Override
+        public Expense[] newArray(int size) {
+            return new Expense[size];
+        }
+    };
 
     public int getAmount () {
         return this.amount;
