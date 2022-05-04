@@ -8,14 +8,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -29,17 +27,21 @@ public class TripListActivity extends AppCompatActivity {
     private AdapterTrip adapter;
     private Trip trip;
     private int position;
+    private ImageButton editUserProfile;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_list);
         createTrip=findViewById(R.id.floatingActionButton);
+        editUserProfile=findViewById(R.id.userProfileButton);
 
-        recycler=findViewById(R.id.recyclerView);
+        recycler=findViewById(R.id.recyclerExpenseView);
         recycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
-
+        Intent listActivityIntent=getIntent();
+        user=listActivityIntent.getParcelableExtra("currentUser");
 
         listActivityResultLauncher=registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -76,7 +78,6 @@ public class TripListActivity extends AppCompatActivity {
                             position=(int)view.getTag();
                         }
                     });
-
                     recycler.setAdapter(adapter);
                 }
             }
@@ -92,6 +93,15 @@ public class TripListActivity extends AppCompatActivity {
                 }
                 intent.putParcelableArrayListExtra("enter",trips);
                 listActivityResultLauncher.launch(intent);
+            }
+        });
+
+        editUserProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent userProfileIntent=new Intent(TripListActivity.this,UserProfileActivity.class);
+                userProfileIntent.putExtra("modUser",user);
+                startActivity(userProfileIntent);
             }
         });
 

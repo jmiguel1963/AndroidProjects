@@ -22,24 +22,6 @@ public class Trip implements Parcelable{
         users=new ArrayList<User>();
     }
 
-    protected Trip(Parcel in) {
-        uri = in.readParcelable(Uri.class.getClassLoader());
-        date = in.readString();
-        description = in.readString();
-    }
-
-    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
-        @Override
-        public Trip createFromParcel(Parcel in) {
-            return new Trip(in);
-        }
-
-        @Override
-        public Trip[] newArray(int size) {
-            return new Trip[size];
-        }
-    };
-
     public void addExpense(Expense expense){
         expenses.add(expense);
     }
@@ -80,15 +62,37 @@ public class Trip implements Parcelable{
         this.description = description;
     }
 
+    protected Trip(Parcel in) {
+        uri = in.readParcelable(Uri.class.getClassLoader());
+        date = in.readString();
+        description = in.readString();
+        expenses = in.createTypedArrayList(Expense.CREATOR);
+        users= in.createTypedArrayList(User.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(uri, flags);
+        dest.writeString(date);
+        dest.writeString(description);
+        dest.writeTypedList(expenses);
+        dest.writeTypedList(users);
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel,int i) {
-        parcel.writeParcelable(uri,i);
-        parcel.writeString(date);
-        parcel.writeString(description);
-    }
+    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
+        @Override
+        public Trip createFromParcel(Parcel in) {
+            return new Trip(in);
+        }
+
+        @Override
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
 }

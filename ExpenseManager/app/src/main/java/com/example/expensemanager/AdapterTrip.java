@@ -20,10 +20,6 @@ public class AdapterTrip extends RecyclerView.Adapter<AdapterTrip.ViewHolderTrip
         void onItemClick(View view,Trip item);
     }
 
-   /*public interface OnItemClickListener{
-        void onItemClick(Trip item);
-    }*/
-
     public AdapterTrip(ArrayList<Trip> trips,AdapterTrip.OnItemClickListener listener) {
         this.trips = trips;
         this.listener=listener;
@@ -68,7 +64,7 @@ public class AdapterTrip extends RecyclerView.Adapter<AdapterTrip.ViewHolderTrip
                 @Override
                 public void onClick(View view) {
                     listener.onItemClick(view,trip);
-                    //listener.onItemClick(trip);
+                    //notifyItemChanged(getBindingAdapterPosition());
                 }
             });
         }

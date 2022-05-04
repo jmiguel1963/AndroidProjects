@@ -23,6 +23,8 @@ public class Expense implements Parcelable {
         description = in.readString();
         amount = in.readInt();
         date = in.readString();
+        payers=new HashMap<String,Integer>();
+        in.readMap(payers,Integer.class.getClassLoader());
     }
 
     @Override
@@ -30,6 +32,7 @@ public class Expense implements Parcelable {
         dest.writeString(description);
         dest.writeInt(amount);
         dest.writeString(date);
+        dest.writeMap(payers);
     }
 
     @Override
@@ -48,6 +51,10 @@ public class Expense implements Parcelable {
             return new Expense[size];
         }
     };
+
+    public Map<String, Integer> getPayers() {
+        return payers;
+    }
 
     public int getAmount () {
         return this.amount;

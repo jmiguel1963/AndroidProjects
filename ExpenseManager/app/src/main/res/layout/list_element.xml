@@ -8,14 +8,14 @@
     android:paddingBottom="10dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cv"
+        android:id="@+id/newCv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp"
+        android:layout_margin="1dp"
         app:cardCornerRadius="15dp"
-        app:cardElevation="5dp"
+        app:cardElevation="1dp"
         app:cardUseCompatPadding="true"
-        app:cardBackgroundColor="#FF6200EE">
+        app:cardBackgroundColor="#00FFFF">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,21 +23,27 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/descriptionText"
+                android:id="@+id/descriptionViewTrip"
+                android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:textSize="16sp"
                 android:layout_weight="1"/>
 
             <TextView
-                android:id="@+id/amountText"
+                android:id="@+id/amountViewTrip"
+                android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:textSize="16sp"
                 android:layout_weight="1"/>
 
              <TextView
-                android:id="@+id/dateText"
+                android:id="@+id/dateViewTrip"
+                 android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                 android:textSize="16sp"
                 android:layout_weight="1"/>
 
         </LinearLayout>

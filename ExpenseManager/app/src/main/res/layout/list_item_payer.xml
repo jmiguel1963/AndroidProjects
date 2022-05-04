@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="1dp"
+    android:paddingBottom="1dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvPayer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="1dp"
+        app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="#00FFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageListPayer"
+                android:layout_width="0dp"
+                android:layout_height="97dp"
+                android:layout_weight="1"
+                tools:srcCompat="@tools:sample/avatars"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="97dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/nameListPayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/amountListPayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

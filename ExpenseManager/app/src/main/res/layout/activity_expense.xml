@@ -7,27 +7,21 @@
     tools:context=".ExpenseActivity">
 
     <TextView
-        android:id="@+id/textViewExpenseDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="88dp"
-        android:text="Date:"
-        app:layout_constraintEnd_toStartOf="@+id/editTextExpenseDate"
-        app:layout_constraintTop_toBottomOf="@+id/textViewExpenseAmount" />
-
-    <TextView
-        android:id="@+id/textViewExpenseAmount"
-        android:layout_width="97dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="32dp"
-        android:text="Amount:"
-        app:layout_constraintEnd_toStartOf="@+id/editTextExpenseAmount"
-        app:layout_constraintTop_toBottomOf="@+id/textViewExpenseDescription" />
+        android:id="@+id/textViewExpenseDescription"
+        android:layout_width="112dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="44dp"
+        android:text="Description:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editTextExpenseDescription"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/editTextExpensePersonName"
+        android:id="@+id/editTextExpenseDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -38,79 +32,42 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewExpenseDescription"
-        android:layout_width="112dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="44dp"
-        android:text="Description:"
-        app:layout_constraintEnd_toStartOf="@+id/editTextExpensePersonName"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewExpensePayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="52dp"
-        android:text="Payer:"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        app:layout_constraintEnd_toStartOf="@+id/textViewExpenseBuyer"
-        app:layout_constraintHorizontal_bias="0.585"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewExpenseBuyer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="52dp"
-        android:text="(...)"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        app:layout_constraintEnd_toStartOf="@+id/button3" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.706"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="130dp"
-        android:layout_height="69dp"
-        android:layout_marginBottom="16dp"
-        android:text="Button"
+        android:id="@+id/textViewExpenseAmount"
+        android:layout_width="97dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="32dp"
+        android:text="Amount:"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="375dp"
-        android:layout_height="229dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/editTextExpenseAmount"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.13" />
 
     <EditText
         android:id="@+id/editTextExpenseAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="36dp"
         android:ems="10"
-        android:inputType="number"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextExpensePersonName" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.142" />
+
+    <TextView
+        android:id="@+id/textViewExpenseDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="88dp"
+        android:text="Date:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editTextExpenseDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.22000003" />
 
     <EditText
         android:id="@+id/editTextExpenseDate"
@@ -119,8 +76,57 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
-        android:inputType="date"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextExpenseAmount" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.24000001" />
+
+    <Button
+        android:id="@+id/saveExpense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SaveExpense"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.86"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.37" />
+
+    <Spinner
+        android:id="@+id/expenseSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.38" />
+
+    <Button
+        android:id="@+id/expenseValidation"
+        android:layout_width="130dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="16dp"
+        android:text="Validation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.89" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerExpenseView"
+        android:layout_width="375dp"
+        android:layout_height="229dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65999997" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

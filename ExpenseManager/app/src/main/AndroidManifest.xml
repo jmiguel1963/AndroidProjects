@@ -14,27 +14,35 @@
         android:theme="@style/Theme.ExpenseManager">
         <activity
             android:name=".ExpenseActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".UserProfileActivity"
-            android:exported="false" />
+            android:screenOrientation="portrait"
+            android:exported="true" />
         <activity
             android:name=".TripUsersActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".TripViewActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".TripEditActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".TripListActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".RegisterActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

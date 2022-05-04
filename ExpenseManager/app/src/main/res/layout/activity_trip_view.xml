@@ -67,7 +67,7 @@
     </ScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewTrip"
+        android:id="@+id/recyclerViewExpense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
