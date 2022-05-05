@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class TripViewActivity extends AppCompatActivity {
 
@@ -33,10 +35,11 @@ public class TripViewActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> activityNewUserResultLauncher;
     private AdapterExpense adapter;
     private ImageButton editTrip;
-    private RecyclerView recycler;
+    private RecyclerView recycler,recyclerPayer;
     private Button addNewUser;
     private TripExpense tripExpense;
     private int position;
+    private Uri oldUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,8 @@ public class TripViewActivity extends AppCompatActivity {
         tripDate=findViewById(R.id.tripTextViewDate);
         recycler=findViewById(R.id.recyclerViewExpense);
         recycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        recyclerPayer=findViewById(R.id.recyclerViewPayers);
+        recyclerPayer.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
 
         Intent intent=getIntent();
         trip=intent.getParcelableExtra("item");
@@ -62,12 +67,41 @@ public class TripViewActivity extends AppCompatActivity {
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode()==RESULT_OK && result.getData()!=null){
                     trip=result.getData().getParcelableExtra("backExpenseTrip");
-                    adapter= new AdapterExpense(trip.getExpenses(), new AdapterExpense.OnItemClickListener() {
+                    /*adapter= new AdapterExpense(trip.getExpenses(), new AdapterExpense.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, Expense item) {
                             position=(int)view.getTag();
                             tripExpense=new TripExpense(trip,position);
                             moveToExpenseView(tripExpense);
+                        }
+                    });*/
+                    adapter=new AdapterExpense(trip.getExpenses(), new AdapterExpense.ClickListener() {
+                        @Override
+                        public void onItemClick(View view, Expense item) {
+                            position=(int)view.getTag();
+                            tripExpense=new TripExpense(trip,position);
+                            moveToExpenseView(tripExpense);
+                        }
+
+                        @Override
+                        public boolean onItemLongClick(View view, Expense item) {
+                            ArrayList<PayerUser> payerUsers= new ArrayList<PayerUser>();
+                            PayerUser payerUser;
+
+                            ArrayList<User> tripUsers=trip.getUsers();
+                            for (Map.Entry<String,Integer>set :item.getPayers().entrySet()){
+                                for (User myUser:tripUsers){
+                                    if (myUser.getName().equals(set.getKey())){
+                                        oldUri= Uri.parse(myUser.getUriPath());
+                                        break;
+                                    }
+                                }
+                                payerUser=new PayerUser(set.getKey(),set.getValue(),oldUri);
+                                payerUsers.add(payerUser);
+                            }
+                            AdapterPayer adapterPayer=new AdapterPayer(payerUsers);
+                            recyclerPayer.setAdapter(adapterPayer);
+                            return true;
                         }
                     });
                     recycler.setAdapter(adapter);
@@ -127,13 +161,42 @@ public class TripViewActivity extends AppCompatActivity {
             }
         });
 
-        adapter=new AdapterExpense(trip.getExpenses(), new AdapterExpense.OnItemClickListener() {
+        /*adapter=new AdapterExpense(trip.getExpenses(), new AdapterExpense.OnItemClickListener() {
             @Override
             public void onItemClick(View view, Expense item) {
                 position=(int)view.getTag();
                 tripExpense=new TripExpense(trip,position);
                 moveToExpenseView(tripExpense);
 
+            }
+        });*/
+        adapter=new AdapterExpense(trip.getExpenses(), new AdapterExpense.ClickListener() {
+            @Override
+            public void onItemClick(View view, Expense item) {
+                position=(int)view.getTag();
+                tripExpense=new TripExpense(trip,position);
+                moveToExpenseView(tripExpense);
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, Expense item) {
+                ArrayList<PayerUser> payerUsers= new ArrayList<PayerUser>();
+                PayerUser payerUser;
+
+                ArrayList<User> tripUsers=trip.getUsers();
+                for (Map.Entry<String,Integer>set :item.getPayers().entrySet()){
+                    for (User myUser:tripUsers){
+                        if (myUser.getName().equals(set.getKey())){
+                            oldUri= Uri.parse(myUser.getUriPath());
+                            break;
+                        }
+                    }
+                    payerUser=new PayerUser(set.getKey(),set.getValue(),oldUri);
+                    payerUsers.add(payerUser);
+                }
+                AdapterPayer adapterPayer=new AdapterPayer(payerUsers);
+                recyclerPayer.setAdapter(adapterPayer);
+                return true;
             }
         });
         recycler.setAdapter(adapter);

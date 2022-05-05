@@ -30,31 +30,43 @@ public class MainActivity extends AppCompatActivity {
         personName=findViewById(R.id.loginPersonName);
         password=findViewById(R.id.loginPassword);
 
+        personName.setText("");
+        password.setText("");
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 name=personName.getText().toString();
                 pass=password.getText().toString();
-                users=SharedPrefConfig.readListPref(getApplicationContext());
-                if (users==null){
-                    users= new ArrayList<User>();
-                }
-                boolean rightUser=false;
-                User currentUser=null;
-                for (User oldUser:users){
-                    if (oldUser.getName().equals(name) && oldUser.getPassword().equals((pass))){
-                        rightUser=true;
-                        currentUser=oldUser;
-                        break;
+                if (!name.equals("") || !pass.equals("")){
+                    users=SharedPrefConfig.readListPref(getApplicationContext());
+                    if (users==null){
+                        users= new ArrayList<User>();
                     }
-                }
-                if (rightUser){
-                    Intent intent=new Intent(MainActivity.this,TripListActivity.class);
-                    intent.putExtra("currentUser",currentUser);
-                    startActivity(intent);
+                    boolean rightUser=false;
+                    User currentUser=null;
+                    for (User oldUser:users){
+                        if (oldUser.getName().equals(name) && oldUser.getPassword().equals((pass))){
+                            rightUser=true;
+                            currentUser=oldUser;
+                            break;
+                        }
+                    }
+                    if (rightUser){
+                        Intent intent=new Intent(MainActivity.this,TripListActivity.class);
+                        personName.setText("");
+                        password.setText("");
+                        intent.putExtra("currentUser",currentUser);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Name or Password incorrect.You must register it",Toast.LENGTH_SHORT).show();
+                    }
                 }else{
-                    Toast.makeText(getApplicationContext(),"Name or Password incorrect",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"the 2 fields must be filled",Toast.LENGTH_SHORT).show();
                 }
+
+
+
             }
         });
 

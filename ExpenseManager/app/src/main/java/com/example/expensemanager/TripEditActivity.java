@@ -20,7 +20,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class TripEditActivity extends AppCompatActivity {
 
@@ -45,7 +51,7 @@ public class TripEditActivity extends AppCompatActivity {
         validation=findViewById(R.id.btnSave);
         descriptionText=findViewById(R.id.editDescription);
         dateText=findViewById(R.id.editDate);
-        image=findViewById(R.id.imageView1);
+        image=findViewById(R.id.imagePhoto);
 
         Intent originalIntent=getIntent();
         trips=originalIntent.getParcelableArrayListExtra("enter");
@@ -104,4 +110,10 @@ public class TripEditActivity extends AppCompatActivity {
             }
         });
     }
+
+    /*private boolean checkFormat(String input){
+        boolean isValidFormat = input.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})");
+
+        return isValidFormat;
+    }*/
 }
