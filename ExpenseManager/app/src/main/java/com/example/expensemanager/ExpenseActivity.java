@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Selection;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,6 +24,8 @@ import java.util.Map;
 
 public class ExpenseActivity extends AppCompatActivity {
 
+    //declaration of all Objects and primitives of Main Activity
+    //which need to be accessed from any method or function of this activity
     private Button saveExpense,expenseValidation;
     private EditText editExpenseDescription;
     private EditText editExpenseAmount;
@@ -52,17 +55,25 @@ public class ExpenseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense);
+        //code to avoid softwareKeyboard pushing buttons to the top
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        //widgets inflation in constraintLayout
         saveExpense=findViewById(R.id.saveExpense);
         editExpenseDescription=findViewById(R.id.editTextExpenseDescription);
         editExpenseAmount=findViewById(R.id.editTextExpenseAmount);
         editExpenseDate=findViewById(R.id.editTextExpenseDate);
         expenseValidation=findViewById(R.id.expenseValidation);
         recyclerView=findViewById(R.id.recyclerExpenseView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         spinner=findViewById(R.id.expenseSpinner);
 
 
+
+        //definition of recyclerview layout parameters
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+
+        //reading data intent coming from TripViewActivity
+        //trip and item position in expenses recyclerview are included in Bundle and passed in intent
         Intent intent =getIntent();
         tripExpense=intent.getParcelableExtra("tripExpense");
         trip=tripExpense.getTrip();
@@ -81,8 +92,7 @@ public class ExpenseActivity extends AppCompatActivity {
            editExpenseDescription.setText(trip.getExpenses().get(previousPosition).getDescription());
            editExpenseDate.setText(trip.getExpenses().get(previousPosition).getDate());
            expensePayers=trip.getExpenses().get(previousPosition).getPayers();
-           editExpenseDescription.setEnabled(false);
-           editExpenseDate.setEnabled(false);
+
            for (int j=0;j<trip.getUsers().size();j++){
                if (expensePayers.containsKey(trip.getUsers().get(j).getName())){
                    spinner.setSelection(j);
@@ -127,36 +137,38 @@ public class ExpenseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!noUsers) {
-                    expenseDescription=editExpenseDescription.getText().toString();
-                    expenseAmount=Integer.parseInt(editExpenseAmount.getText().toString());
-                    expenseDate=editExpenseDate.getText().toString();
-                    if(!expenseDescription.equals("") && expenseAmount!=0 && !expenseDate.equals("")){
-                        editExpenseDescription.setEnabled(false);
-                        editExpenseDate.setEnabled(false);
-                        int myIndex=0;
-                        for (int i=0;i<payerUsers.size();i++){
-                            if (payerUsers.get(i).getName().equals(tripUsers.get(currentPosition).getName())){
-                                noPayer=false;
-                                myIndex=i;
-                                break;
-                            }
-                        }
-                        if (noPayer){
-                            Uri uri=null;
-                            for (User myUser:tripUsers){
-                                if (myUser.getName().equals(tripUsers.get(currentPosition).getName())){
-                                    uri=Uri.parse(myUser.getUriPath());
+                    if (Utilities.checkAmountFormat(getApplicationContext(),editExpenseAmount.getText().toString())){
+                        expenseAmount=Integer.parseInt(editExpenseAmount.getText().toString());
+                        expenseDescription=editExpenseDescription.getText().toString();
+                        expenseDate=editExpenseDate.getText().toString();
+                        if(!expenseDescription.equals("") && expenseAmount!=0 && Utilities.checkFormat(getApplicationContext(),expenseDate)){
+                            int myIndex=0;
+                            for (int i=0;i<payerUsers.size();i++){
+                                if (payerUsers.get(i).getName().equals(tripUsers.get(currentPosition).getName())){
+                                    noPayer=false;
+                                    myIndex=i;
+                                    break;
                                 }
                             }
-                            payerUser=new PayerUser(tripUsers.get(currentPosition).getName(),expenseAmount,uri);
-                            payerUsers.add(payerUser);
+                            if (noPayer){
+                                Uri uri=null;
+                                for (User myUser:tripUsers){
+                                    if (myUser.getName().equals(tripUsers.get(currentPosition).getName())){
+                                        uri=Uri.parse(myUser.getUriPath());
+                                    }
+                                }
+                                payerUser=new PayerUser(tripUsers.get(currentPosition).getName(),expenseAmount,uri);
+                                payerUsers.add(payerUser);
+                            }else{
+                                payerUsers.get(myIndex).setAmount(expenseAmount);
+                            }
+                            adapterPayerUser =new AdapterPayerUser(payerUsers);
+                            recyclerView.setAdapter(adapterPayerUser);
                         }else{
-                          payerUsers.get(myIndex).setAmount(expenseAmount);
+                            Toast.makeText(getApplicationContext(),"At least one of the fields is empty or the format is empty",Toast.LENGTH_SHORT).show();
                         }
-                        adapterPayerUser =new AdapterPayerUser(payerUsers);
-                        recyclerView.setAdapter(adapterPayerUser);
                     }else{
-                        Toast.makeText(getApplicationContext(),"At least one of the fields is empty",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Amount must be anumber",Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     Toast.makeText(getApplicationContext(),"There are no users to be selected as payers",Toast.LENGTH_SHORT).show();
@@ -167,31 +179,37 @@ public class ExpenseActivity extends AppCompatActivity {
         expenseValidation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!noUsers){
-                    int totalAmount=0;
-                    if (previousPosition==-1){
-                        if (!expenseDescription.equals("")){
-                            expense=new Expense(expenseDescription,0,expenseDate);
+                if(Utilities.checkFormat(getApplicationContext(),editExpenseDate.getText().toString()) && !editExpenseDescription.getText().toString().equals("")){
+                    if (!noUsers){
+                        int totalAmount=0;
+                        if (previousPosition==-1){
+                            if (!expenseDescription.equals("")){
+                                expense=new Expense(expenseDescription,0,expenseDate);
+                                for (PayerUser myPayerUser:payerUsers){
+                                    expense.AddNewPayer(myPayerUser.getName(),myPayerUser.getAmount());
+                                    totalAmount +=myPayerUser.getAmount();
+                                }
+                                expense.setAmount(totalAmount);
+                                trip.addExpense(expense);
+                            }
+                        }else{
+                            expense=trip.getExpenses().get(previousPosition);
                             for (PayerUser myPayerUser:payerUsers){
                                 expense.AddNewPayer(myPayerUser.getName(),myPayerUser.getAmount());
-                                totalAmount +=myPayerUser.getAmount();
+                                totalAmount += myPayerUser.getAmount();
                             }
+                            expense.setDescription(editExpenseDescription.getText().toString());
+                            expense.setDate(editExpenseDate.getText().toString());
                             expense.setAmount(totalAmount);
-                            trip.addExpense(expense);
                         }
-                    }else{
-                        expense=trip.getExpenses().get(previousPosition);
-                        for (PayerUser myPayerUser:payerUsers){
-                            expense.AddNewPayer(myPayerUser.getName(),myPayerUser.getAmount());
-                            totalAmount += myPayerUser.getAmount();
-                        }
-                        expense.setAmount(totalAmount);
                     }
+                    Intent expenseBackIntent=new Intent();
+                    expenseBackIntent.putExtra("backExpenseTrip",trip);
+                    setResult(RESULT_OK,expenseBackIntent);
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Data are incorrect",Toast.LENGTH_SHORT).show();
                 }
-                Intent expenseBackIntent=new Intent();
-                expenseBackIntent.putExtra("backExpenseTrip",trip);
-                setResult(RESULT_OK,expenseBackIntent);
-                finish();
             }
         });
         adapterPayerUser =new AdapterPayerUser(payerUsers);

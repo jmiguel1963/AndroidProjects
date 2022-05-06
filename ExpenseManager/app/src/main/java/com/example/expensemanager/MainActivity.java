@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    //declaration of all Objects and primitives of Main Activity
+    //which need to be accessed from any method or function of this activity
     private Button loginButton;
     private Button registerButton;
     private EditText personName;
@@ -25,19 +27,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //widgets inflation in constraintLayout
         loginButton=findViewById(R.id.buttonLogin);
         registerButton=findViewById(R.id.buttonRegister);
         personName=findViewById(R.id.loginPersonName);
         password=findViewById(R.id.loginPassword);
 
+        //editing fields clearing
         personName.setText("");
         password.setText("");
 
+        //code executed when clicking Login button
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //editing fields reading
                 name=personName.getText().toString();
                 pass=password.getText().toString();
+                //checking if editing fields are filled
                 if (!name.equals("") || !pass.equals("")){
                     users=SharedPrefConfig.readListPref(getApplicationContext());
                     if (users==null){
@@ -70,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //code executed when clicking Register button
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

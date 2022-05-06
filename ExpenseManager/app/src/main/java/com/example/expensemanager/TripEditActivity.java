@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -69,7 +70,6 @@ public class TripEditActivity extends AppCompatActivity {
             }
         }
 
-
         activityResultLauncher= registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
@@ -95,25 +95,22 @@ public class TripEditActivity extends AppCompatActivity {
             public void onClick(View view) {
                 tripDescription=descriptionText.getText().toString();
                 tripDate=dateText.getText().toString();
-                Intent resultIntent=new Intent();
-                if (createTrip){
-                    Trip newTrip=new Trip(tripUri,tripDate,tripDescription);
-                    trips.add(newTrip);
-                    resultIntent.putParcelableArrayListExtra("result",trips);
-                }else{
-                    trip.setDate(tripDate);
-                    trip.setDescription(tripDescription);
-                    resultIntent.putExtra("edit",trip);
+                boolean isFormatCorrect=Utilities.checkFormat(getApplicationContext(),tripDate);
+                if (isFormatCorrect && !tripDescription.equals("")){
+                    Intent resultIntent=new Intent();
+                    if (createTrip){
+                        Trip newTrip=new Trip(tripUri,tripDate,tripDescription);
+                        trips.add(newTrip);
+                        resultIntent.putParcelableArrayListExtra("result",trips);
+                    }else{
+                        trip.setDate(tripDate);
+                        trip.setDescription(tripDescription);
+                        resultIntent.putExtra("edit",trip);
+                    }
+                    setResult(RESULT_OK,resultIntent);
+                    finish();
                 }
-                setResult(RESULT_OK,resultIntent);
-                finish();
             }
         });
     }
-
-    /*private boolean checkFormat(String input){
-        boolean isValidFormat = input.matches("([0-9]{2})/([0-9]{2})/([0-9]{4})");
-
-        return isValidFormat;
-    }*/
 }
