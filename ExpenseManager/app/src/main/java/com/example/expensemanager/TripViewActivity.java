@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -67,17 +68,18 @@ public class TripViewActivity extends AppCompatActivity {
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode()==RESULT_OK && result.getData()!=null){
                     trip=result.getData().getParcelableExtra("backExpenseTrip");
-                    /*adapter= new AdapterExpense(trip.getExpenses(), new AdapterExpense.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, Expense item) {
-                            position=(int)view.getTag();
-                            tripExpense=new TripExpense(trip,position);
-                            moveToExpenseView(tripExpense);
-                        }
-                    });*/
+                    AdapterPayer adapterPayer=new AdapterPayer(new ArrayList<PayerUser>());
+                    recyclerPayer.setAdapter(adapterPayer);
+                    int childViewsCount=(int)recycler.getChildCount();
+                    for (int c=0;c<childViewsCount;c++){
+                        recycler.getChildAt(c).findViewById(R.id.recycleLinear).setBackgroundColor(Color.parseColor("#00FFFF"));
+                    }
+
                     adapter=new AdapterExpense(trip.getExpenses(), new AdapterExpense.ClickListener() {
                         @Override
                         public void onItemClick(View view, Expense item) {
+
+
                             position=(int)view.getTag();
                             tripExpense=new TripExpense(trip,position);
                             moveToExpenseView(tripExpense);
@@ -85,6 +87,15 @@ public class TripViewActivity extends AppCompatActivity {
 
                         @Override
                         public boolean onItemLongClick(View view, Expense item) {
+
+                            view.findViewById(R.id.recycleLinear).setBackgroundColor(Color.LTGRAY);
+                            int currentPosition=(int)view.getTag();
+                            int childViewsCount=(int)recycler.getChildCount();
+                            for (int c=0;c<childViewsCount;c++){
+                                if (c!=currentPosition){
+                                    recycler.getChildAt(c).findViewById(R.id.recycleLinear).setBackgroundColor(Color.parseColor("#00FFFF"));
+                                }
+                            }
                             ArrayList<PayerUser> payerUsers= new ArrayList<PayerUser>();
                             PayerUser payerUser;
 
@@ -161,15 +172,6 @@ public class TripViewActivity extends AppCompatActivity {
             }
         });
 
-        /*adapter=new AdapterExpense(trip.getExpenses(), new AdapterExpense.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, Expense item) {
-                position=(int)view.getTag();
-                tripExpense=new TripExpense(trip,position);
-                moveToExpenseView(tripExpense);
-
-            }
-        });*/
         adapter=new AdapterExpense(trip.getExpenses(), new AdapterExpense.ClickListener() {
             @Override
             public void onItemClick(View view, Expense item) {
@@ -180,6 +182,14 @@ public class TripViewActivity extends AppCompatActivity {
 
             @Override
             public boolean onItemLongClick(View view, Expense item) {
+                view.findViewById(R.id.recycleLinear).setBackgroundColor(Color.LTGRAY);
+                int currentPosition=(int)view.getTag();
+                int childViewsCount=(int)recycler.getChildCount();
+                for (int c=0;c<childViewsCount;c++){
+                    if (c!=currentPosition){
+                        recycler.getChildAt(c).findViewById(R.id.recycleLinear).setBackgroundColor(Color.parseColor("#00FFFF"));
+                    }
+                }
                 ArrayList<PayerUser> payerUsers= new ArrayList<PayerUser>();
                 PayerUser payerUser;
 

@@ -215,4 +215,12 @@ public class ExpenseActivity extends AppCompatActivity {
         adapterPayerUser =new AdapterPayerUser(payerUsers);
         recyclerView.setAdapter(adapterPayerUser);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("backExpenseTrip", trip);
+        setResult(RESULT_OK,intent);
+        finish();
+    }
 }
