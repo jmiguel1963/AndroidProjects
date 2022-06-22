@@ -45,7 +45,12 @@ public class AdapterPayer extends RecyclerView.Adapter<AdapterPayer.ViewHolderPa
         }
 
         public void assignPayer(PayerUser payerUser){
-            imagePayerView.setImageURI(payerUser.getUri());
+            if (!payerUser.getUriPath().equals("")){
+                new ImageDownloader(imagePayerView).execute(payerUser.getUriPath());
+                //imagePayerView.setImageResource(R.drawable.user_avatar);
+            }else{
+                imagePayerView.setImageResource(R.drawable.user_avatar);
+            }
         }
     }
 }

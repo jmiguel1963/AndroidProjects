@@ -44,13 +44,18 @@ public class AdapterPayerUser extends RecyclerView.Adapter<AdapterPayerUser.View
 
         public ViewHolderPayerUser(@NonNull View itemView) {
             super(itemView);
-            imagePayerUserView=itemView.findViewById(R.id.imageListPayer);
+            imagePayerUserView=itemView.findViewById(R.id.imageAlternativeListPayer);
             namePayerUserView=itemView.findViewById(R.id.nameListPayer);
             amountPayerUserView=itemView.findViewById(R.id.amountListPayer);
         }
 
         public void assignPayerUser(PayerUser payerUser){
-            imagePayerUserView.setImageURI(payerUser.getUri());
+            if (!payerUser.getUriPath().equals("")){
+                new ImageDownloader(imagePayerUserView).execute(payerUser.getUriPath());
+                //imagePayerUserView.setImageResource(R.drawable.user_avatar);
+            }else{
+                imagePayerUserView.setImageResource(R.drawable.user_avatar);
+            }
             namePayerUserView.setText(payerUser.getName());
             amountPayerUserView.setText(String.valueOf(payerUser.getAmount()));
         }

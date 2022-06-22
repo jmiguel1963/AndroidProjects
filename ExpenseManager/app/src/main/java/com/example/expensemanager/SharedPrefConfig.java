@@ -34,4 +34,5 @@ public class SharedPrefConfig {
         ArrayList<User> users=gson.fromJson(jsonString,type);
         return users;
     }
+
 }

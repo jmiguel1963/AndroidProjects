@@ -16,21 +16,16 @@ import java.util.ArrayList;
 public class AdapterExpense extends RecyclerView.Adapter<AdapterExpense.ViewHolderExpense> {
 
     private ArrayList<Expense> expenses;
-    //final AdapterExpense.OnItemClickListener listener;
-    final AdapterExpense.ClickListener listener;
-    /*public interface OnItemClickListener{
-        void onItemClick(View view,Expense item);
-    }*/
+    private ItemClickListener clickListener;
 
-   public interface ClickListener{
-        void onItemClick(View view,Expense item);
-        boolean onItemLongClick(View view,Expense item);
+
+   public interface ItemClickListener{
+        void onItemClick(View view,int position);
+        boolean onItemLongClick(View view,int position);
     }
 
-    //public AdapterExpense(ArrayList<Expense> expenses,AdapterExpense.OnItemClickListener listener){
-    public AdapterExpense(ArrayList<Expense> expenses,AdapterExpense.ClickListener listener){
+    public AdapterExpense(ArrayList<Expense> expenses){
         this.expenses=expenses;
-        this.listener=listener;
     }
 
     @NonNull
@@ -51,7 +46,11 @@ public class AdapterExpense extends RecyclerView.Adapter<AdapterExpense.ViewHold
         return expenses.size();
     }
 
-    public class ViewHolderExpense extends RecyclerView.ViewHolder {
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+
+    public class ViewHolderExpense extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
 
         TextView descriptionViewTripText;
         TextView amountViewTripText;
@@ -67,25 +66,21 @@ public class AdapterExpense extends RecyclerView.Adapter<AdapterExpense.ViewHold
             descriptionViewTripText.setText(expense.getDescription());
             dateViewTripText.setText(expense.getDate());
             amountViewTripText.setText(""+expense.getAmount());
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onItemClick(view,expense);
-                }
-            });
-            /*itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onItemClick(view,expense);
-                }
-            });*/
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    listener.onItemLongClick(view,expense);
-                    return true;
-                }
-            });
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null)
+                clickListener.onItemClick(view,getBindingAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            if (clickListener != null)
+                clickListener.onItemLongClick(view,getBindingAdapterPosition());
+                return true;
         }
     }
 }

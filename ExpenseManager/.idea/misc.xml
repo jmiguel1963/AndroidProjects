@@ -4,18 +4,29 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Jose Miguel/AndroidGitHubProjects/ExpenseManager/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_adapter_payer_resume.xml" value="0.1" />
         <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_expense.xml" value="0.18" />
+        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_expense_alternative.xml" value="0.22" />
+        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_expense_user.xml" value="0.1" />
+        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_main.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_register.xml" value="0.17074275362318841" />
-        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_trip_edit.xml" value="0.33" />
+        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_trip_edit.xml" value="0.21" />
         <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_trip_list.xml" value="0.25" />
+        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_trip_resume.xml" value="0.5" />
         <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_trip_users.xml" value="0.25" />
-        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_trip_view.xml" value="0.33" />
+        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_trip_view.xml" value="0.2" />
         <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/activity_user_profile.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/amount_input.xml" value="0.16621376811594202" />
         <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/list_element.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/list_item.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/list_item_expense_text.xml" value="0.1526268115942029" />
         <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/list_item_payer.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/list_item_payer_resume.xml" value="0.16394927536231885" />
         <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/list_item_payer_user.xml" value="0.1" />
+        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/list_item_payer_wt_3buttons.xml" value="0.1621376811594203" />
+        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/list_item_payer_wt_buttons.xml" value="0.33" />
+        <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/list_item_trip.xml" value="0.25" />
         <entry key="..\:/Users/Jose Miguel/GitHubProjects/AndroidProjects/ExpenseManager/app/src/main/res/layout/list_item_user.xml" value="0.17074275362318841" />
       </map>
     </option>

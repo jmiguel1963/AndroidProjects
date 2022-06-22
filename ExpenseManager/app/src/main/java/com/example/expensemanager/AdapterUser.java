@@ -51,7 +51,13 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.ViewHolderUser
         }
 
         public void assignUser(User user){
-            imageUserView.setImageURI(Uri.parse(user.getUriPath()));
+            if(!user.getUriPath().equals("")){
+                new ImageDownloader(imageUserView).execute(user.getUriPath());
+                //imageUserView.setImageResource(R.drawable.user_avatar);
+            }else{
+                imageUserView.setImageResource(R.drawable.user_avatar);
+            }
+            //imageUserView.setImageURI(Uri.parse(user.getUriPath()));
             nameUserView.setText(user.getName());
             userNameUserView.setText(user.getEmail());
 

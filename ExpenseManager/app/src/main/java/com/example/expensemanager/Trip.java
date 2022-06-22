@@ -1,6 +1,6 @@
 package com.example.expensemanager;
 
-import android.net.Uri;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,18 +8,50 @@ import java.util.ArrayList;
 
 public class Trip implements Parcelable{
 
-    private Uri uri;
+    private String urlPath;
     private String date;
     private String description;
     private ArrayList<Expense> expenses;
     private ArrayList<User> users;
+    private String id;
 
-    public Trip(Uri uri, String date, String description) {
-        this.uri = uri;
+    public Trip(String urlPath, String date, String description, String id) {
+        this.urlPath = urlPath;
         this.date = date;
         this.description = description;
+        this.id=id;
         expenses=new ArrayList<Expense>();
         users=new ArrayList<User>();
+
+    }
+
+    protected Trip(Parcel in) {
+        urlPath = in.readString();
+        date = in.readString();
+        description = in.readString();
+        id=in.readString();
+        expenses = in.createTypedArrayList(Expense.CREATOR);
+        users = in.createTypedArrayList(User.CREATOR);
+    }
+
+    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
+        @Override
+        public Trip createFromParcel(Parcel in) {
+            return new Trip(in);
+        }
+
+        @Override
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void addExpense(Expense expense){
@@ -30,6 +62,10 @@ public class Trip implements Parcelable{
         users.add(user);
     }
 
+    public void clearExpenses(){
+        expenses=new ArrayList<Expense>();
+    }
+
     public ArrayList<Expense> getExpenses(){
         return this.expenses;
     }
@@ -38,12 +74,12 @@ public class Trip implements Parcelable{
         return this.users;
     }
 
-    public Uri getUri() {
-        return uri;
+    public String getUrlPath() {
+        return urlPath;
     }
 
-    public void setUri(Uri uri) {
-        this.uri = uri;
+    public void setUrlPath(String urlPath) {
+        this.urlPath = urlPath;
     }
 
     public String getDate() {
@@ -62,37 +98,18 @@ public class Trip implements Parcelable{
         this.description = description;
     }
 
-    protected Trip(Parcel in) {
-        uri = in.readParcelable(Uri.class.getClassLoader());
-        date = in.readString();
-        description = in.readString();
-        expenses = in.createTypedArrayList(Expense.CREATOR);
-        users= in.createTypedArrayList(User.CREATOR);
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(uri, flags);
-        dest.writeString(date);
-        dest.writeString(description);
-        dest.writeTypedList(expenses);
-        dest.writeTypedList(users);
-    }
-
     @Override
     public int describeContents() {
         return 0;
     }
 
-    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
-        @Override
-        public Trip createFromParcel(Parcel in) {
-            return new Trip(in);
-        }
-
-        @Override
-        public Trip[] newArray(int size) {
-            return new Trip[size];
-        }
-    };
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(urlPath);
+        parcel.writeString(date);
+        parcel.writeString(description);
+        parcel.writeString(id);
+        parcel.writeTypedList(expenses);
+        parcel.writeTypedList(users);
+    }
 }

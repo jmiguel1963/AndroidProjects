@@ -10,14 +10,22 @@ public class User implements Parcelable{
     private String email;
     private String uriPath;
     private String password;
-    private int amountSpent;
+    //private int amountSpent;
+
+    /*User(String email){
+        this.email=email;
+    }*/
 
     User (String name, String password,String email, String uriPath){
         this.name = name;
         this.email = email;
         this.uriPath = uriPath;
         this.password=password;
-        this.amountSpent = 0;
+        //this.amountSpent = 0;
+    }
+
+    User(){
+
     }
 
     protected User(Parcel in) {
@@ -25,7 +33,7 @@ public class User implements Parcelable{
         email = in.readString();
         password=in.readString();
         uriPath = in.readString();
-        amountSpent = in.readInt();
+        //amountSpent = in.readInt();
     }
 
     @Override
@@ -34,7 +42,7 @@ public class User implements Parcelable{
         dest.writeString(email);
         dest.writeString(password);
         dest.writeString(uriPath);
-        dest.writeInt(amountSpent);
+        //dest.writeInt(amountSpent);
     }
 
     @Override
@@ -62,9 +70,9 @@ public class User implements Parcelable{
         this.password = password;
     }
 
-    public void ResetAmount(){
-        amountSpent = 0;
-    }
+    //public void ResetAmount(){
+       // amountSpent = 0;
+    //}
 
     public String getName() {
         return name;
@@ -90,13 +98,13 @@ public class User implements Parcelable{
         this.uriPath = uriPath;
     }
 
-    public int getAmountSpent() {
-        return amountSpent;
-    }
+    //public int getAmountSpent() {
+        //return amountSpent;
+    //}
 
-    public void AddAmountSpent (int amount) {
-        this.amountSpent+= amount;
-    }
+    //public void AddAmountSpent (int amount) {
+     //   this.amountSpent+= amount;
+    //}
 
     @Override
     public String toString() {

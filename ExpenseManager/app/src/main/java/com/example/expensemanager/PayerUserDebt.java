@@ -1,20 +1,17 @@
 package com.example.expensemanager;
 
-import android.net.Uri;
+public class PayerUserDebt {
 
-public class PayerUser {
     private String name;
     private int amount;
     private String uriPath;
-    private boolean isCalculated;
     private int debt;
 
-    PayerUser(String name, int amount,String uriPath){
-        this.name=name;
-        this.amount=amount;
-        this.uriPath=uriPath;
-        this.isCalculated=true;
-        this.debt=0;
+    public PayerUserDebt(String name, int amount, String uriPath, int debt) {
+        this.name = name;
+        this.amount = amount;
+        this.uriPath = uriPath;
+        this.debt = debt;
     }
 
     public String getName() {
@@ -39,14 +36,6 @@ public class PayerUser {
 
     public void setUriPath(String uriPath) {
         this.uriPath = uriPath;
-    }
-
-    public boolean isCalculated() {
-        return isCalculated;
-    }
-
-    public void setCalculated(boolean isCalculated) {
-        this.isCalculated = isCalculated;
     }
 
     public int getDebt() {

@@ -49,7 +49,7 @@ public class ExpenseActivity extends AppCompatActivity {
     private Map<String,Integer> expensePayers;
     private String firstSelection;
     private boolean noPayer=true;
-    private Uri oldUri;
+    private String oldUriPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,11 +104,11 @@ public class ExpenseActivity extends AppCompatActivity {
             for (Map.Entry<String,Integer>set :expensePayers.entrySet()){
                 for (User myUser:tripUsers){
                     if (myUser.getName().equals(set.getKey())){
-                        oldUri=Uri.parse(myUser.getUriPath());
+                        oldUriPath=myUser.getUriPath();
                         break;
                     }
                 }
-                payerUser=new PayerUser(set.getKey(),set.getValue(),oldUri);
+                payerUser=new PayerUser(set.getKey(),set.getValue(),oldUriPath);
                 payerUsers.add(payerUser);
             }
         }
@@ -151,13 +151,13 @@ public class ExpenseActivity extends AppCompatActivity {
                                 }
                             }
                             if (noPayer){
-                                Uri uri=null;
+                                String uriPath="";
                                 for (User myUser:tripUsers){
                                     if (myUser.getName().equals(tripUsers.get(currentPosition).getName())){
-                                        uri=Uri.parse(myUser.getUriPath());
+                                        uriPath=myUser.getUriPath();
                                     }
                                 }
-                                payerUser=new PayerUser(tripUsers.get(currentPosition).getName(),expenseAmount,uri);
+                                payerUser=new PayerUser(tripUsers.get(currentPosition).getName(),expenseAmount,uriPath);
                                 payerUsers.add(payerUser);
                             }else{
                                 payerUsers.get(myIndex).setAmount(expenseAmount);
@@ -184,7 +184,7 @@ public class ExpenseActivity extends AppCompatActivity {
                         int totalAmount=0;
                         if (previousPosition==-1){
                             if (!expenseDescription.equals("")){
-                                expense=new Expense(expenseDescription,0,expenseDate);
+                                //expense=new Expense(expenseDescription,0,expenseDate);
                                 for (PayerUser myPayerUser:payerUsers){
                                     expense.AddNewPayer(myPayerUser.getName(),myPayerUser.getAmount());
                                     totalAmount +=myPayerUser.getAmount();

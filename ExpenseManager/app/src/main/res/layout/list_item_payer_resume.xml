@@ -42,7 +42,12 @@
                     android:layout_weight="1" />
 
                 <TextView
-                    android:id="@+id/amountListPayer"
+                    android:id="@+id/amountCompletePayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+                <TextView
+                    android:id="@+id/amountDuePayer"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1" />

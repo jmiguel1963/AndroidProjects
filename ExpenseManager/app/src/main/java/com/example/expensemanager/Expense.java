@@ -3,6 +3,7 @@ package com.example.expensemanager;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,19 +11,29 @@ public class Expense implements Parcelable {
     private String description;
     private int amount;
     private String date;
+    private String id;
     private Map<String,Integer> payers;
+    private ArrayList<User> users;
 
-    Expense(String description, int amount, String date){
+    Expense(String description, int amount, String date,String id){
         this.description = description;
         this.amount = amount;
         this.date = date;
+        this.id=id;
+        users=new ArrayList<>();
         payers = new HashMap<String, Integer>();
+    }
+
+    Expense(){
+
     }
 
     protected Expense(Parcel in) {
         description = in.readString();
         amount = in.readInt();
         date = in.readString();
+        id=in.readString();
+        users = in.createTypedArrayList(User.CREATOR);
         payers=new HashMap<String,Integer>();
         in.readMap(payers,Integer.class.getClassLoader());
     }
@@ -32,6 +43,8 @@ public class Expense implements Parcelable {
         dest.writeString(description);
         dest.writeInt(amount);
         dest.writeString(date);
+        dest.writeString(id);
+        dest.writeTypedList(users);
         dest.writeMap(payers);
     }
 
@@ -52,8 +65,24 @@ public class Expense implements Parcelable {
         }
     };
 
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
+    }
+
     public Map<String, Integer> getPayers() {
         return payers;
+    }
+
+    public void addUser(User user){
+        users.add(user);
+    }
+
+    public void removeUser(User user){
+        users.remove(user);
     }
 
     public int getAmount () {
@@ -66,6 +95,14 @@ public class Expense implements Parcelable {
 
     public String getDate() {
         return date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setDescription(String description) {

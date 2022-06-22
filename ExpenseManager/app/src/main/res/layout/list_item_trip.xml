@@ -27,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="97dp"
             android:layout_weight="1"
-            tools:srcCompat="@tools:sample/avatars"/>
+            app:srcCompat="@drawable/trip"/>
 
     <LinearLayout
         android:orientation="vertical"

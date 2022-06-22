@@ -16,37 +16,19 @@
         app:cardCornerRadius="15dp"
         app:cardElevation="1dp"
         app:cardUseCompatPadding="true"
-        app:cardBackgroundColor="#00FFFF">
+        app:cardBackgroundColor="#FF0000">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imageAlternativeListPayer"
-                android:layout_width="0dp"
-                android:layout_height="97dp"
-                android:layout_weight="1"
-                tools:srcCompat="@tools:sample/avatars"/>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_height="97dp"
-                android:layout_weight="1">
-
                 <TextView
-                    android:id="@+id/nameListPayer"
+                    android:id="@+id/expenseText"
+                    android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/amountListPayer"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:layout_height="80dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
